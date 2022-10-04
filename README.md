@@ -7,7 +7,8 @@
 
 <br>
 
-### User Access
+### User Access/Flow
+Only the players and admin signup for an account. A general user does not have to create an account.
 
 <br>
 

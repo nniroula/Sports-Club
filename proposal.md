@@ -8,12 +8,26 @@ The goal of this project is quite simple. It is designed to provide an informati
 
 The majority of the users visiting the app will be the players of the club, their family members, and the admin team of the club. It extends to the supporters and well wishers of the club as well. This also provides an opportunity for the people looking to join a cricket club in the city of Aurora. Other than the aforemetioned groups of people, the users could include the local sports enthusiasts, and others. Therefore, the website will be surfed by diverse array of people. <br>
 
-Since the project involvs creating an own API as well as using an exteranl api, the type of the data to be used on the project revolves around these two main requirements of the app.
+Since the project involvs creating an own API as well as using an exteranl api, the type of data to be used in the project revolves around these two main requirements of the app. The data that will be stored in database includes a player's first name, last name, username, email, passsword, phone number, date of birth, the date of entry to the club, the dat of termination from the club, emergency contact person, and a role in the club(eg batsman or wicket keeper). These data will be collected via a user's input when creating an account. For the payment processing, I need to do more research about the api that I am intended to use(that is stripe api). The strech goal includes defining the different categories of the admin such the President, Advisor, Coach, Captain, as well as Treasurer and providing them only needed access previlleges. 
 
 
 <br>
 
 <br>
+
+
+7. In brief, outline your approach to creating your project (knowing that you may not
+know everything in advance and that these details might change later). Answer
+questions like the ones below, but feel free to add more information:
+a. What does your database schema look like?
+b. What kinds of issues might you run into with your API? This is especially
+important if you are creating your own API, web scraping produces
+notoriously messy data.
+c. Is there any sensitive information you need to secure?
+d. What functionality will your app include?
+e. What will the user flow look like?
+f. What features make your site more than a CRUD app? What are your
+stretch goals?
 
 
 Step Two is all about fleshing out your project idea. For this step, please write a proposal based
