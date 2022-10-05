@@ -16,6 +16,10 @@ Only the players and admin signup for an account. A general user does not have t
 
 <br>
 
+### Entity Relationshiop Diagram
+![](er-diagrams/sports-er-2.png)
+<br>
+
 ### API Endpoints
 
 <br>
