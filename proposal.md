@@ -10,6 +10,8 @@ The majority of the users visiting the app will be the players of the club, thei
 
 Since the project involvs creating an own API as well as using an exteranl api, the type of data to be used in the project revolves around these two main requirements of the app. The data that will be stored in database includes a player's first name, last name, username, email, passsword, phone number, date of birth, the date of entry to the club, the dat of termination from the club, emergency contact person, and a role in the club(eg batsman or wicket keeper). These data will be collected via a user's input when creating an account. For the payment processing, I need to do more research about the api that I am intended to use(that is stripe api). The strech goal includes defining the different categories of the admin such the President, Advisor, Coach, Captain, as well as Treasurer and providing them only needed access previlleges. 
 
+The database shema consists of players, matches, payments, donors, and admins tables. It is shown in the sports-er-2.png file.
+![](er-diagrams/sports-er-2.png)
 
 <br>
 
