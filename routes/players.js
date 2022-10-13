@@ -22,6 +22,16 @@ router.get('/', function(req, res, next){
     });
 })
 
+// post request
+router.post('/players', function(req, res, next){
+    // return res.send("You are trying to create a player profile.")
+    return res.send({
+        "firsName": "LOL",
+        "lastName": "Lol",
+        "age": 34
+    })
+})
+
 
 
 module.exports = router;
