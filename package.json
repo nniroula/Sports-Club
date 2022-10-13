@@ -1,0 +1,20 @@
+{
+  "name": "capstone-two",
+  "version": "1.0.0",
+  "description": "### Deployment <br>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nniroula/Sports-Club.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nniroula/Sports-Club/issues"
+  },
+  "homepage": "https://github.com/nniroula/Sports-Club#readme"
+}
