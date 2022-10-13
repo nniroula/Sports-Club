@@ -1,8 +1,16 @@
 "use strict";
 
 const express = require('express');
+// import routes
+const playersRoute = require('./routes/players');
 
 const app = express();
+
+// use the players route
+// app.use('/', playersRoute);
+app.use('', playersRoute);
+
+
 
 
 /** Handle 404 errors -- this matches everything */
