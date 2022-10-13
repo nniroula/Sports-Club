@@ -15,8 +15,14 @@ router.get('/players', function(req, res, next){
 
 router.get('/', function(req, res, next){
     console.log("This the home route for the app.");
-    return res.send("I am your home");
+    // return res.send("Aurora Everest Cricket Club.");
+    return res.send({
+        "name": "Aurora Everest Cricket Club",
+        "Estd": "July 2020"
+    });
 })
+
+
 
 module.exports = router;
 
