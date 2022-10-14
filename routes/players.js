@@ -43,13 +43,22 @@ router.get('/players/:id', async function(req, res, next){
 
 
 // post request
-router.post('/players', function(req, res, next){
-    // return res.send("You are trying to create a player profile.")
-    return res.send({
-        "firsName": "LOL",
-        "lastName": "Lol",
-        "age": 34
-    })
+router.post('/players', async function(req, res, next){
+    // grab data passed in req.body, and that data to create a player
+    // destruct the request body and get data
+    try{
+        const {first_name, last_name, email, birth_date, 
+            phone_number, emergency_contact, profile_picture_url,
+            playing_role, registered_date} = req.body;
+
+        const player = await Player.createPlayer(first_name, last_name, email, birth_date, 
+            phone_number, emergency_contact, profile_picture_url,
+            playing_role, registered_date);
+        
+        return res.json(player);
+    }catch(e){
+        return next(e);
+    }
 })
 
 
