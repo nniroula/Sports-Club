@@ -5,6 +5,8 @@ const express = require('express');
 
 // import db to query the database
 const db = require('../db');  // db = db.js file
+// import playerClass
+const Player = require('../models/playerClass');
 
 const router = new express.Router();
 
@@ -12,13 +14,18 @@ const router = new express.Router();
 //     console.log("This should retrieve all the players.");
 // })
 router.get('/players', async function(req, res, next){
-    // console.log("This should retrieve all the players.");
-    // return res.send("I am the Players route.");  // this renders data to the browser
-    const result = await db.query(`SELECT * FROM players`);
-    console.log(result); // pending, so use async await
+    // const result = await db.query(`SELECT * FROM players`);
+    // use OOP concept for modal classes
+    // const players = Player.getAllPlayers();
+    const results = await Player.getAllPlayers(); // getAllPlayer() returns a promise, so await it
+
+    // console.log(result); // pending, so use async await
     // return res.json(result);
     // return res.json(result.rows[0]); // this returns one player
-    return res.json(result.rows);
+    // return res.json(results.rows);
+    // return res.json(players.rows);
+    console.log(results);
+    return res.json(results);
 })
 
 router.get('/', function(req, res, next){
