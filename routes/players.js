@@ -55,7 +55,8 @@ router.post('/players', async function(req, res, next){
             phone_number, emergency_contact, profile_picture_url,
             playing_role, registered_date);
         
-        return res.json(player);
+        // return res.json(player);
+        return res.status(201).json(player);
     }catch(e){
         return next(e);
     }
