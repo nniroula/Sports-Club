@@ -10,24 +10,7 @@ const Player = require('../models/playerClass');
 
 const router = new express.Router();
 
-// router.get('/players', function(){
-//     console.log("This should retrieve all the players.");
-// })
-router.get('/players', async function(req, res, next){
-    // const result = await db.query(`SELECT * FROM players`);
-    // use OOP concept for modal classes
-    // const players = Player.getAllPlayers();
-    const results = await Player.getAllPlayers(); // getAllPlayer() returns a promise, so await it
-
-    // console.log(result); // pending, so use async await
-    // return res.json(result);
-    // return res.json(result.rows[0]); // this returns one player
-    // return res.json(results.rows);
-    // return res.json(players.rows);
-    console.log(results);
-    return res.json(results);
-})
-
+// HOME Route
 router.get('/', function(req, res, next){
     console.log("This the home route for the app.");
     // return res.send("Aurora Everest Cricket Club.");
@@ -36,6 +19,28 @@ router.get('/', function(req, res, next){
         "Estd": "July 2020"
     });
 })
+
+
+router.get('/players', async function(req, res, next){
+    try{
+        const results = await Player.getAllPlayers(); // getAllPlayer() returns a promise, so await it here
+        return res.json(results);
+    }catch(e){
+        return next(e);
+    }
+})
+
+// get a single player
+router.get('/players/:id', async function(req, res, next){
+    // invalid id should throw error, it does not do that now. handle it in getPlayerById method
+    try{
+        const result = await Player.getPlayerById(req.params.id);
+        return res.json(result);
+    }catch(e){
+        return next(e);
+    }
+})
+
 
 // post request
 router.post('/players', function(req, res, next){
