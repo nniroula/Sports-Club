@@ -3,6 +3,7 @@
 DROP TABLE IF EXISTS players;
 
 CREATE TABLE players (
+    id SERIAL PRIMARY KEY,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
      -- username VARCHAR(25) PRIMARY KEY,
@@ -16,5 +17,5 @@ CREATE TABLE players (
     profile_picture_url TEXT,
     playing_role TEXT,
     registered_date TEXT NOT NULL
-    -- exit_date TEXT NOT NULL
+    -- exit_date TEXT NOT NULL DEFAULT NULL
 );
