@@ -8,6 +8,8 @@ const app = express();
 
 // use the players route
 // app.use('/', playersRoute);
+
+app.use(express.json()); // parse request bodies for json
 app.use('', playersRoute);
 
 
