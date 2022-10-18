@@ -84,6 +84,20 @@ router.put('/players/:id', async function(req, res, next){
     }
 })
 
+// delete a player
+router.delete('/players/:id', async function(req, res, next){
+    try{
+        // const result = db.query('DELETE FROM players WHERE id = $1', [req.params.id]);
+        // return res.send({message: "Successfully deleted a user"});
+
+        // destructure the request params, and get the id
+        const id = req.params.id;
+        const result = await Player.deletePlayer(id);
+        res.json(result);
+    }catch(e){
+        return next(e);
+    }
+})
 
 
 module.exports = router;

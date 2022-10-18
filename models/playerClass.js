@@ -58,20 +58,20 @@ class Player{
                                             playing_role, 
                                             registered_date
                                         ) 
-                        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) 
-                        RETURNING id, 
-                                first_name, 
-                                last_name, 
-                                email, 
-                                birth_date, 
-                                phone_number, 
-                                emergency_contact, 
-                                profile_picture_url,
-                                playing_role, 
-                                registered_date`, 
-                        [fName, lName, email, birthDate, phoneNumber, emergencyContact, 
-                            profilePictureUrl, playingRole, registeredDate
-                        ])
+                                VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) 
+                                RETURNING id, 
+                                    first_name, 
+                                    last_name, 
+                                    email, 
+                                    birth_date, 
+                                    phone_number, 
+                                    emergency_contact, 
+                                    profile_picture_url,
+                                    playing_role, 
+                                    registered_date`, 
+                                [fName, lName, email, birthDate, phoneNumber, emergencyContact, 
+                                    profilePictureUrl, playingRole, registeredDate
+                                ])
         return result.rows[0];
     }
 
@@ -104,46 +104,36 @@ class Player{
                                                 phoneNumber, emergencyContact, profilePictureUrl, playingRole, 
                                                 registeredDate, id]
                                     );
-        debugger;
+        // debugger;
         // throw an error if result.rows.lenght === 0
         if(result.rows.length === 0){
             throw new ExpressError(`player with id of ${id} not found`, 404)
             // return new ExpressError(`player with id of ${id} not found`, 404)
         }
-        debugger;
+        // debugger;
         return result.rows[0];
     }
+
+    // delete a player by its id
+    static async deletePlayer(id){
+        // inquiry the database to get the player by the id
+        const player = await db.query(`SELECT * FROM players WHERE id=${id}`)
+        // const player = await Player.getPlayerById(id);
+        if(player.rows.length === 0){
+            // throw new ExpressError(`player with id of ${id} is not found`, 404 );
+            return new ExpressError(`player with id of ${id} is not found`, 404 );
+        }
+
+        // const result = db.query('DELETE FROM players WHERE id = $1', [req.params.id]);
+        // const result = db.query('DELETE FROM players WHERE id = $1', [id]);
+        db.query('DELETE FROM players WHERE id = $1', [id]);
+        // return ({message: "Successfully deleted a user"});
+        return ({message: `Successfully deleted a player with id of ${id}.`});
+
+        // return player;
+        // return ;
+    } 
 }
 
 module.exports = Player;
 
-
-
-//     // POST Request
-// static async createPlayer(fName, lName, email, birthDate, phoneNumber, emergencyContact, profilePictureUrl,
-//                         playingRole, registeredDate){
-//     const result = await db.query(`INSERT INTO players(first_name, 
-//                                                         last_name, 
-//                                                         email, 
-//                                                         birth_date, 
-//                                                         phone_number, 
-//                                                         emergency_contact, 
-//                                                         profile_picture_url,
-//                                                         playing_role, 
-//                                                         registered_date) 
-//                                     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) 
-//                                     RETURNING id, 
-//                                             first_name, 
-//                                             last_name, 
-//                                             email, 
-//                                             birth_date, 
-//                                             phone_number, 
-//                                             emergency_contact, 
-//                                             profile_picture_url,
-//                                             playing_role, 
-//                                             registered_date`, 
-//                                     [fName, lName, email, birthDate, phoneNumber, emergencyContact, 
-//                                         profilePictureUrl, playingRole, registeredDate
-//                                     ])
-//     return result.rows[0];
-// }
