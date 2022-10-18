@@ -1,5 +1,6 @@
 "use strict";
 
+const { json } = require('express');
 const express = require('express');
 // const app = require('../app');   // Instead router is needed
 
@@ -45,7 +46,7 @@ router.get('/players/:id', async function(req, res, next){
 // post request
 router.post('/players', async function(req, res, next){
     // grab data passed in req.body, and that data to create a player
-    // destruct the request body and get data
+    // destructure the request body and get data
     try{
         const {first_name, last_name, email, birth_date, 
             phone_number, emergency_contact, profile_picture_url,
@@ -57,6 +58,27 @@ router.post('/players', async function(req, res, next){
         
         // return res.json(player);
         return res.status(201).json(player);
+    }catch(e){
+        return next(e);
+    }
+})
+
+// update the player
+router.put('/players/:id', async function(req, res, next){
+    try{
+        // grab the input from the request body by destructuring the request body
+        const {first_name, last_name, email, birth_date, 
+            phone_number, emergency_contact, profile_picture_url,
+            playing_role, registered_date} = req.body;
+
+        // to update, get the player id from  the url param. update method is defined in Player class
+        const playerToBeUpdated = await Player.updatePlayer(req.params.id, first_name, last_name, email, birth_date, 
+            phone_number, emergency_contact, profile_picture_url,
+            playing_role, registered_date);
+        
+        debugger;
+        return res.json(playerToBeUpdated);
+
     }catch(e){
         return next(e);
     }

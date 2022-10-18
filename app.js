@@ -4,7 +4,7 @@ const express = require('express');
 // import routes
 const playersRoute = require('./routes/players');
 // import error class
-// const { NotFoundError, ExpressError } = require("./errors/expressErrors");
+const { NotFoundError, ExpressError } = require("./errors/expressErrors");
 
 const app = express();
 
@@ -19,9 +19,9 @@ app.use('', playersRoute);
 
 
 /** Handle 404 errors -- this matches everything */
-app.use(function (req, res, next) {
-    return next(new NotFoundError());
-});
+// app.use(function (req, res, next) {
+//     return next(new NotFoundError());
+// });
 
 /** Generic error handler; anything unhandled goes here. */
 // app.use(function (err, req, res, next) {

@@ -74,6 +74,45 @@ class Player{
                         ])
         return result.rows[0];
     }
+
+    // define an update method
+    // you need an id of the player to be updated
+    // NOTE updating with an invalid id throws wrong erorr in postman
+    static async updatePlayer(id, fName, lName, email, birthDate, phoneNumber, emergencyContact, 
+                        profilePictureUrl, playingRole, registeredDate){
+        const result = await db.query(`UPDATE players SET 
+                                            first_name = $1, 
+                                            last_name = $2, 
+                                            email = $3, 
+                                            birth_date = $4, 
+                                            phone_number = $5, 
+                                            emergency_contact = $6, 
+                                            profile_picture_url = $7,
+                                            playing_role = $8, 
+                                            registered_date = $9 WHERE id = $10 
+                                        RETURNING id, 
+                                            first_name, 
+                                            last_name, 
+                                            email, 
+                                            birth_date, 
+                                            phone_number, 
+                                            emergency_contact, 
+                                            profile_picture_url,
+                                            playing_role, 
+                                            registered_date`,  
+                                        [fName, lName, email, birthDate, 
+                                                phoneNumber, emergencyContact, profilePictureUrl, playingRole, 
+                                                registeredDate, id]
+                                    );
+        debugger;
+        // throw an error if result.rows.lenght === 0
+        if(result.rows.length === 0){
+            throw new ExpressError(`player with id of ${id} not found`, 404)
+            // return new ExpressError(`player with id of ${id} not found`, 404)
+        }
+        debugger;
+        return result.rows[0];
+    }
 }
 
 module.exports = Player;
