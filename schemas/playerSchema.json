@@ -1,0 +1,120 @@
+
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "player Schema",
+    "required": [
+        "first_name",
+        "last_name",
+        "email",
+        "birth_date",
+        "phone_number",
+        "emergency_contact",
+        "registered_date"
+    ],
+    "properties": {
+        "first_name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z]+$",
+            "default": "",
+            "title": "The first_name Schema",
+            "examples": [
+                "John"
+            ],
+            "minLength": 2,
+            "maxLength": 25,
+            "required": ["type", "pattern"]
+        },
+        "last_name": {
+            "type": "string",
+            "pattern": "^[a-zA-Z]+$",
+            "title": "The last_name Schema",
+            "examples": [
+                "Smith"
+            ],
+            "minLength": 2,
+            "maxLength": 25
+        },
+        "email": {
+            "type": "string",
+            "default": "",
+            "title": "The email Schema",
+            "examples": [
+                "j@j.com"
+            ]
+        },
+        "birth_date": {
+            "type": "string",
+            "pattern": "^(1[0-2]|0[1-9])[/](3[01]|[12][0-9]|0[1-9])[/][0-9]{4}$",
+            "default": "",
+            "title": "The birth_date Schema",
+            "examples": [
+                "12/05/1988"
+            ]
+        },
+        "phone_number": {
+            "type": "string",
+            "pattern": "^[1-9]\\d{2}-\\d{3}-\\d{4}",
+            "default": "",
+            "title": "The phone_number Schema",
+            "examples": [
+                "111-111-1111"
+            ]
+        },
+        "emergency_contact": {
+            "type": "string",
+            "pattern": "^[a-zA-Z]+$",
+            "default": "",
+            "title": "The emergency_contact Schema",
+            "examples": [
+                "sarah"
+            ],
+            "minLength": 2,
+            "maxLength": 25
+        },
+        "profile_picture_url": {
+            "type": "string",
+            "default": "",
+            "title": "The profile_picture_url Schema",
+            "examples": [
+                ""
+            ]
+        },
+        "playing_role": {
+            "type": "string",
+            "pattern": "^[a-zA-Z]+$|^[a-zA-Z]+[\\s][a-zA-Z]+$",
+            "default": "",
+            "title": "The playing_role Schema",
+            "examples": [
+                "Batsman"
+            ]
+        },
+        "registered_date": {
+            "type": "string",
+            "pattern": "^(1[0-2]|0[1-9])[/](3[01]|[12][0-9]|0[1-9])[/][0-9]{4}$",
+            "default": "",
+            "title": "The registered_date Schema",
+            "examples": [
+                "10/14/2022"
+            ]
+        }
+    
+    },
+    "examples": [{
+        "first_name": "John",
+        "last_name": "Smith",
+        "email": "j@j.com",
+        "birth_date": "12/05/1988",
+        "phone_number": "111-111-1111",
+        "emergency_contact": "sarah",
+        "profile_picture_url": "",
+        "playing_role": "Batsman",
+        "registered_date": "10/14/2022"
+    }]
+}
+
+
+
+
