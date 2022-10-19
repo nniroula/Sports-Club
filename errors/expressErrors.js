@@ -48,11 +48,20 @@
       super(message, 403);
     }
   }
+
+    /** 409 CONFLICT error. */
+  
+  class ConflictError extends ExpressError {
+    constructor(message = "Conflict") {
+      super(message, 409);
+    }
+  }
   
   module.exports = {
     ExpressError,
     NotFoundError,
     // UnauthorizedError,
     BadRequestError,
-    ForbiddenError
+    ForbiddenError,
+    ConflictError
   };

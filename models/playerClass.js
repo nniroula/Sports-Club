@@ -1,6 +1,6 @@
 const db = require('../db');
 const errors = require('../errors/expressErrors');
-const { ExpressError, NotFoundError } = require('../errors/expressErrors');
+const { ExpressError, NotFoundError, ConflictError } = require('../errors/expressErrors');
 
 /* NOTE:
     We do not have constructor and we are not going to instantiate the class. So static as a modifier to the method
@@ -20,20 +20,37 @@ class Player{
     static async getPlayerById(id){
         const result = await db.query(`SELECT * FROM players WHERE id=$1`, [id]);
         
-        // handle error for invalid id, if reslult.rows.lenght === 0, error
         if(result.rows.length === 0){
-            // create custom error class and call it here
-
-            throw new ExpressError(`Player with id of ${id} not found.`, 404);
-            // return new ExpressError(`Player with id of ${id} not found.`, 404);
-            // throw new NotFoundError('play with the id not found');
+            return "not found";
         }
         return result.rows[0];
+    }
+
+    // get a player by email
+    static async getPlayerByEmail(email){
+        const existingPlayerWithEmail = await db.query(`SELECT * FROM players WHERE email = $1`, [email]);
+        if(existingPlayerWithEmail.rows.length > 0){
+            // return true;
+            // return "Found";
+            return existingPlayerWithEmail.rows[0];
+        }
+        return "Not Found";
     }
 
     // POST Request
     static async createPlayer(fName, lName, email, birthDate, phoneNumber, emergencyContact, profilePictureUrl,
         playingRole, registeredDate){
+            // check if an email already exist, if so do not create a player
+        // const existingPlayerWithEmail = await db.query(`SELECT * FROM players WHERE email = $1`, [email]);
+
+        // if(existingPlayerWithEmail.rows.length > 0){
+        //     // return "Email is taken. Please use a different email to regiter a player."
+        //     // return new ConflictError("Email is taken. Please use a different email.", 409)
+        //     // throw new ConflictError("Email is taken. Please use a different email.", 409);
+           
+        //     return res.status(409).json(new ConflictError("Email is taken. Please use a different email.", 409));
+        // }
+
         const result = await db.query(`INSERT INTO players(first_name, 
                                             last_name, 
                                             email, 
