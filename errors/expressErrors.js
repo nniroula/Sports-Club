@@ -35,24 +35,24 @@
   
   /** 400 BAD REQUEST error. */
   
-//   class BadRequestError extends ExpressError {
-//     constructor(message = "Bad Request") {
-//       super(message, 400);
-//     }
-//   }
+  class BadRequestError extends ExpressError {
+    constructor(message = "Bad Request") {
+      super(message, 400);
+    }
+  }
   
   /** 403 BAD REQUEST error. */
   
-//   class ForbiddenError extends ExpressError {
-//     constructor(message = "Bad Request") {
-//       super(message, 403);
-//     }
-//   }
+  class ForbiddenError extends ExpressError {
+    constructor(message = "Bad Request") {
+      super(message, 403);
+    }
+  }
   
   module.exports = {
     ExpressError,
-    NotFoundError
+    NotFoundError,
     // UnauthorizedError,
-    // BadRequestError,
-    // ForbiddenError,
+    BadRequestError,
+    ForbiddenError
   };

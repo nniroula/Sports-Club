@@ -13,5 +13,4 @@ CREATE TABLE players (
     profile_picture_url TEXT,
     playing_role TEXT,
     registered_date TEXT NOT NULL
-    -- exit_date TEXT NOT NULL DEFAULT NULL
 );

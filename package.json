@@ -19,6 +19,7 @@
   "homepage": "https://github.com/nniroula/Sports-Club#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "jsonschema": "^1.4.1",
     "pg": "^8.8.0"
   }
 }
