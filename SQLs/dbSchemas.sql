@@ -14,3 +14,17 @@ CREATE TABLE players (
     playing_role TEXT,
     registered_date TEXT NOT NULL
 );
+
+-- create a users table
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users(
+    id SERIAL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    username VARCHAR(25) NOT NULL,
+    password TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email TEXT NOT NULL CHECK (position('@' IN email) > 1),
+    phone_number TEXT UNIQUE NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
+);

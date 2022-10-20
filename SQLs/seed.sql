@@ -26,5 +26,16 @@ INSERT INTO players(first_name,
             --    leave profile picture url 
             'batsman',
             '07/20/2020'
-    )
+    );
 
+-- users table
+-- INSERT INTO users(first_name, last_name, email, phone_number, is_admin)
+INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin)
+VALUES('John', 'Doe', 'jd', 'aeccPass', 'jd@gmail.com', '720-123-4567', TRUE);
+
+-- INSERT INTO users(first_name, last_name, email, phone_number, is_admin)
+INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin)
+VALUES('Nabie', 'Nir', 'nn', 'aeccPass', 'nn@gmail.com', '720-000-0000', 'true');
+
+INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin)
+VALUES('Sarah', 'English', 'se', 'aeccPass', 'se@gmail.com', '720-010-0000', 'false');
