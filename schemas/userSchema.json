@@ -1,0 +1,103 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "first_name",
+        "last_name",
+        "username",
+        "password",
+        "email",
+        "phone_number",
+        "is_admin"
+    ],
+    "properties": {
+        "first_name": {
+            "type": "string",
+            "default": "",
+            "title": "The first_name Schema",
+            "examples": [
+                "Nickie"
+            ],
+            "pattern": "^[a-zA-Z]+$",
+            "minLength": 2,
+            "maxLength": 25
+        },
+        "last_name": {
+            "type": "string",
+            "default": "",
+            "title": "The last_name Schema",
+            "examples": [
+                "Johnson"
+            ],
+            "pattern": "^[a-zA-Z]+$",
+            "minLength": 2,
+            "maxLength": 25
+        },
+        "username": {
+            "type": "string",
+            "default": "",
+            "title": "The username Schema",
+            "examples": [
+                "njohnson"
+            ],
+            "pattern": "^[a-zA-Z]+$|^[a-zA-Z]+[0-9]+$",
+            "minLength": 2,
+            "maxLength": 25
+        },
+        "password": {
+            "type": "string",
+            "default": "",
+            "title": "The password Schema",
+            "examples": [
+                "johnson1234"
+            ],
+            "minLength": 6
+        },
+        "email": {
+            "type": "string",
+            "default": "",
+            "title": "The email Schema",
+            "examples": [
+                "nj@gmail.com"
+            ]
+        },
+        "phone_number": {
+            "type": "string",
+            "default": "",
+            "title": "The phone_number Schema",
+            "examples": [
+                "720-720-7200"
+            ],
+            "pattern": "^[1-9]\\d{2}-\\d{3}-\\d{4}"
+        },
+        "is_admin": {
+            "type": "string",
+            "default": "false",
+            "title": "The is_admin Schema",
+            "examples": [
+                "false"
+            ]
+        },
+        "start_date": {
+            "type": "string",
+            "default": "",
+            "title": "The start_date Schema",
+            "examples": [
+                "10/14/2022"
+            ],
+            "pattern": "^(1[0-2]|0[1-9])[/](3[01]|[12][0-9]|0[1-9])[/][0-9]{4}$"
+        }
+    },
+    "examples": [{
+        "first_name": "Nickie",
+        "last_name": "Johnson",
+        "username": "njohnson",
+        "password": "johnson1234",
+        "email": "nj@gmail.com",
+        "phone_number": "720-720-7200",
+        "is_admin": "false"
+    }]
+}
