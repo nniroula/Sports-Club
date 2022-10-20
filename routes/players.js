@@ -87,8 +87,6 @@ router.put('/players/:id', async function(req, res, next){
 
         // check if email belongs to a different user
         const existingPlayerWithEmail = await Player.getPlayerByEmail(email);
-        console.log(existingPlayerWithEmail);
-        console.log(existingPlayerWithEmail['id']);
         const idOfExistingPlayer = existingPlayerWithEmail['id'];
         if(idOfExistingPlayer !== req.params.id){
             return res.status(409).json(new ConflictError("Email is taken! Try different one", 409));
@@ -108,7 +106,7 @@ router.put('/players/:id', async function(req, res, next){
 })
 
 
-// delete a player
+// delete a player, later on archieve it
 router.delete('/players/:id', async function(req, res, next){
     try{
         // destructure the request params, and get the id
