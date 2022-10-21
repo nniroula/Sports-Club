@@ -79,58 +79,39 @@ class User{
     }
 
 
-
-    // id SERIAL PRIMARY KEY,
-    // first_name TEXT NOT NULL,
-    // last_name TEXT NOT NULL,
-    // username VARCHAR(25) NOT NULL,
-    // password TEXT NOT NULL,
-    // email TEXT NOT NULL CHECK (position('@' IN email) > 1),
-    // phone_number TEXT UNIQUE NOT NULL,
-    // is_admin BOOLEAN NOT NULL DEFAULT FALSE,
-    // -- start_date TEXT NOT NULL
-    // start_date TEXT 
-
-
-
     // define an update method
     // you need an id of the player to be updated
     // NOTE updating with an invalid id throws wrong erorr in postman
-    // static async updatePlayer(id, fName, lName, email, birthDate, phoneNumber, emergencyContact, 
-    //                     profilePictureUrl, playingRole, registeredDate){
-    //     const result = await db.query(`UPDATE players SET 
-    //                                         first_name = $1, 
-    //                                         last_name = $2, 
-    //                                         email = $3, 
-    //                                         birth_date = $4, 
-    //                                         phone_number = $5, 
-    //                                         emergency_contact = $6, 
-    //                                         profile_picture_url = $7,
-    //                                         playing_role = $8, 
-    //                                         registered_date = $9 WHERE id = $10 
-    //                                     RETURNING id, 
-    //                                         first_name, 
-    //                                         last_name, 
-    //                                         email, 
-    //                                         birth_date, 
-    //                                         phone_number, 
-    //                                         emergency_contact, 
-    //                                         profile_picture_url,
-    //                                         playing_role, 
-    //                                         registered_date`,  
-    //                                     [fName, lName, email, birthDate, 
-    //                                             phoneNumber, emergencyContact, profilePictureUrl, playingRole, 
-    //                                             registeredDate, id]
-    //                                 );
-    //     // debugger;
-    //     // throw an error if result.rows.lenght === 0
-    //     if(result.rows.length === 0){
-    //         throw new ExpressError(`player with id of ${id} not found`, 404)
-    //         // return new ExpressError(`player with id of ${id} not found`, 404)
-    //     }
-    //     // debugger;
-    //     return result.rows[0];
-    // }
+    // first_name, last_name, username, password, email, phone_number, is_admin, start_date
+    static async updateUser(id, fName, lName, user_name, pass_word, email_id, phoneNumber, isAdmin, registeredDate){
+        const result = await db.query(`UPDATE users SET 
+                                            first_name = $1, 
+                                            last_name = $2, 
+                                            username = $3, 
+                                            password = $4
+                                            email= $5, 
+                                            phone_number = $6, 
+                                            is_admin = $7, 
+                                            start_date = $8 WHERE id = $9 
+                                        RETURNING id, 
+                                            first_name, 
+                                            last_name,
+                                            username, 
+                                            email, 
+                                            phone_number, 
+                                            is_admin,  
+                                            start_date`,  
+                                        [fName, lName, user_name, pass_word, email_id, phoneNumber, isAdmin, registeredDate, id]
+                                    );
+        // debugger;
+        // throw an error if result.rows.lenght === 0
+        if(result.rows.length === 0){
+            throw new ExpressError(`player with id of ${id} not found`, 404)
+            // return new ExpressError(`player with id of ${id} not found`, 404)
+        }
+        // debugger;
+        return result.rows[0];
+    }
 
     // delete a player by its id
     // static async deletePlayer(id){

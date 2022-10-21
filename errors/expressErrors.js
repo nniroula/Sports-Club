@@ -17,11 +17,6 @@
   class NotFoundError extends ExpressError {
     constructor(message = "Not Found") {
         super(message, 404);
-    // constructor(message, status) {
-    //     super();
-    //     // super(message, 404);
-    //     this.message = message;
-    //     this.status = status;
     }
   }
   

@@ -61,21 +61,21 @@ router.post('/', async function(req, res, next){
         }
         // const { email, username} = req.body;
         const { first_name, last_name, username, password, email, phone_number, is_admin, start_date } = req.body;
-        // verify if a player already exist with a given email
+  
         const existingUserWithInputEmail = await User.getUserByEmail(email);
         const existingUserWithInputUsername = await User.getUserByUsername(username);
-        // if(existingPlayerWithInputEmail === true){
-        if(existingUserWithInputEmail !== "Not Found"){
-            return res.status(409).json(new ConflictError("Email is taken. Please use a different one.", 409));
-        }
 
         if(existingUserWithInputUsername !== "Not Found"){
-            return res.status(409).json(new ConflictError("Username is taken. Please use a different one.", 409));
+            return res.status(409).json(new ConflictError("Username is taken. Please use different one.", 409));
         }
 
-        // createUser(fName, lName, user_name, pass_word, email, phoneNumber, registeredDate)
-        const user = await User.createUser(first_name, last_name, username, password, email, phone_number, is_admin, start_date);
+        if(existingUserWithInputEmail !== "Not Found"){
+            return res.status(409).json(new ConflictError("Email is taken. Please use different one.", 409));
+        }
+        
         // const user = User.createUser(req.body);
+        const user = await User.createUser(first_name, last_name, username, password, email, phone_number, is_admin, start_date);
+      
         return res.status(201).json(user);
     }catch(e){
         return next(e);
@@ -83,39 +83,51 @@ router.post('/', async function(req, res, next){
 })
 
 
-// update the player
-// router.put('/players/:id', async function(req, res, next){
-//     try{
-//         // validate with json schema for players
-//         const inputValidation = jsonschema.validate(req.body, playerSchema);
-//         if(!inputValidation.valid){
-//             const errs = inputValidation.errors.map(e => e.stack);
-//             return res.status(400).json(new BadRequestError(errs)); 
-//         }
-//         // grab the input from the request body by destructuring the request body
-//         const {first_name, last_name, email, birth_date, 
-//             phone_number, emergency_contact, profile_picture_url,
-//             playing_role, registered_date} = req.body;
+// update the user
+router.put('/:id', async function(req, res, next){
+    try{
+        // validate with json schema for players
+        const inputValidation = jsonschema.validate(req.body, userSchema);
+        if(!inputValidation.valid){
+            const errs = inputValidation.errors.map(e => e.stack);
+            return res.status(400).json(new BadRequestError(errs)); 
+        }
+        // grab the input from the request body by destructuring the request body
+        const { first_name, last_name, username, password, email, phone_number, is_admin, start_date } = req.body;
 
-//         // check if email belongs to a different user
-//         const existingPlayerWithEmail = await Player.getPlayerByEmail(email);
-//         const idOfExistingPlayer = existingPlayerWithEmail['id'];
-//         if(idOfExistingPlayer !== req.params.id){
-//             return res.status(409).json(new ConflictError("Email is taken! Try different one", 409));
-//         }
+        // check if email belongs to a different user
+        const existingUserWithInputEmail = await User.getUserByEmail(email);
 
-//         // to update, get the player id from  the url param. update method is defined in Player class
-//         const playerToBeUpdated = await Player.updatePlayer(req.params.id, first_name, last_name, email, birth_date, 
-//             phone_number, emergency_contact, profile_picture_url,
-//             playing_role, registered_date);
-        
-//         // debugger;
-//         return res.json(playerToBeUpdated);
+        if(existingUserWithInputEmail !== "Not Found"){
+            const idOfExistingUserWithEmail = existingUserWithInputEmail['id']
+            // if(idOfExistingUserWithEmail !== Number(req.params.id)){
+            if(idOfExistingUserWithEmail !== req.params.id){
+                return res.status(409).json(new ConflictError("Email is taken! Try different one", 409));
+            }
+        }
 
-//     }catch(e){
-//         return next(e);
-//     }
-// })
+        const existingUserWithInputUsername = await User.getUserByUsername(username);
+        if(existingUserWithInputUsername !== "Not found"){
+            const idOfExistingUserWithUsername = existingUserWithInputUsername['id'];
+            if(idOfExistingUserWithUsername !== Number(req.params.id)){
+                return res.status(409).json(new ConflictError("Username is taken! Try different one", 409));
+            }
+        }
+
+        // debugger;
+        console.log("GOOD HERE ----------------------------");
+
+        const userToBeUpdated = await User.updateUser(req.params.id, first_name, last_name, username, password, email, phone_number, is_admin, start_date);
+        // const userToBeUpdated = await User.updateUser(req.params.id, req.body);
+
+        console.log("GOOD HERE AGAIN ----------------------------");
+        // debugger;
+        return res.json(userToBeUpdated);
+
+    }catch(e){
+        return next(e);
+    }
+})
 
 
 // delete a player, later on archieve it
