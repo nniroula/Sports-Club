@@ -23,7 +23,7 @@ const PORT = 3000;
 // Speed up bcrypt during tests, since the algorithm safety isn't being tested
 //
 // WJB: Evaluate in 2021 if this should be increased to 13 for non-test use
-// const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
+const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
 // console.log("Sports app Config:".green);
 // console.log("SECRET_KEY:".yellow, SECRET_KEY);
@@ -33,11 +33,11 @@ console.log("PORT:", PORT.toString());
 // console.log("Database:".yellow, getDatabaseUri());
 // console.log("---");
 
-// module.exports = {
-//     // SECRET_KEY,
-//     // PORT
-//     // BCRYPT_WORK_FACTOR,
-// //   getDatabaseUri,
-// };
+module.exports = {
+    PORT,
+    BCRYPT_WORK_FACTOR,
+    // SECRET_KEY,
+    // getDatabaseUri,
+};
 
-module.exports = PORT;
+// module.exports = PORT;

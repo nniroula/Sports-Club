@@ -1,8 +1,8 @@
 "use strict";
 
 const app = require("./app");
-// const { PORT } = require("./configs/configurations");
-const PORT = require("./configs/configurations");
+const { PORT } = require("./configs/configurations");
+// const PORT = require("./configs/configurations");
 
 
 app.listen(PORT, function () {

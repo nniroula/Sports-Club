@@ -11,24 +11,29 @@ const db = require('../db');
 const User = require('../models/userClass');
 const { BadRequestError, ConflictError, NotFoundError } = require("../errors/expressErrors");
 
+// import Bcrypt Work Factor
+const { BCRYPT_WORK_FACTOR } = require('../configs/configurations');
+// require bcrypt
+const bcrypt = require('bcrypt');
+
+
 const router = new express.Router();
 
 
 // get all users
-// router.get('/users', async function(req, res, next){
 router.get('/', async function(req, res, next){
     try{
-        const results = await User.getAllUsers(); // getAllPlayer() returns a promise, so await it here
+        const results = await User.getAllUsers();
         return res.json(results);
     }catch(e){
         return next(e);
     }
 })
 
-// all admins
+
 router.get('/admins', async function(req, res, next){
     try{
-        const results = await User.getAllAdmins(); // getAllPlayer() returns a promise, so await it here
+        const results = await User.getAllAdmins();
         return res.json(results);
     }catch(e){
         return next(e);
@@ -38,7 +43,6 @@ router.get('/admins', async function(req, res, next){
 
 // get a single user becomes /users/:id
 router.get('/:id', async function(req, res, next){
-    // invalid id should throw error, it does not do that. handle it in getPlayerById method
     try{
         const result = await User.getUserById(req.params.id);
         if(result === "not found"){
@@ -61,6 +65,11 @@ router.post('/', async function(req, res, next){
         }
         // const { email, username} = req.body;
         const { first_name, last_name, username, password, email, phone_number, is_admin, start_date } = req.body;
+        // hash the password before saving to the database
+        // const hashed_password = bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+        // password = bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+        // password = hashed_password;
+
   
         const existingUserWithInputEmail = await User.getUserByEmail(email);
         const existingUserWithInputUsername = await User.getUserByUsername(username);
@@ -75,6 +84,8 @@ router.post('/', async function(req, res, next){
         
         // const user = User.createUser(req.body);
         const user = await User.createUser(first_name, last_name, username, password, email, phone_number, is_admin, start_date);
+        // const user = await User.createUser(first_name, last_name, username, hashed_password, email, phone_number, is_admin, start_date);
+
       
         return res.status(201).json(user);
     }catch(e){

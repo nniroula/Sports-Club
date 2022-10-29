@@ -7,6 +7,9 @@ const usersRoute = require('./routes/users');
 // import error class
 const { NotFoundError, ExpressError } = require("./errors/expressErrors");
 
+// import the middleware routes
+const middlewareRoute = require('./middleware/auth');
+
 const app = express();
 
 // use the players route
@@ -16,6 +19,8 @@ app.use(express.json()); // parse request bodies for json
 app.use('', playersRoute);
 // app.use(ExpressError)
 app.use('/users', usersRoute);
+// use middleware rotue
+app.use('/users', middlewareRoute);
 
 
 

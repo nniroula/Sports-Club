@@ -3,6 +3,9 @@
 const db = require('../db');
 const errors = require('../errors/expressErrors');
 const { ExpressError, NotFoundError, ConflictError } = require('../errors/expressErrors');
+// import bcrypt
+const bcrypt = require('bcrypt'); // create work factor of 12 in config file
+const { BCRYPT_WORK_FACTOR } = require('../configs/configurations');
 
 /* NOTE:
     We do not have constructor and we are not going to instantiate the class. So static as a modifier to the method
@@ -55,6 +58,7 @@ class User{
 
     // POST Request
     static async createUser(fName, lName, user_name, pass_word, email_id, phoneNumber, isAdmin, registeredDate){
+        const hashed_password = await bcrypt.hash(pass_word, BCRYPT_WORK_FACTOR);
 
         const result = await db.query(`INSERT INTO users(first_name, 
                                             last_name, 
@@ -74,7 +78,8 @@ class User{
                                     phone_number, 
                                     is_admin,
                                     start_date`, 
-                                [fName, lName, user_name, pass_word, email_id, phoneNumber, isAdmin, registeredDate])
+                                [fName, lName, user_name, hashed_password, email_id, phoneNumber, isAdmin, registeredDate])
+
         return result.rows[0];
     }
 
