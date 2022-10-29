@@ -93,7 +93,8 @@ router.put('/:id', async function(req, res, next){
             return res.status(400).json(new BadRequestError(errs)); 
         }
         // grab the input from the request body by destructuring the request body
-        const { first_name, last_name, username, password, email, phone_number, is_admin, start_date } = req.body;
+        const { username, email } = req.body;
+        // const { first_name, last_name, username, password, email, phone_number, is_admin, start_date } = req.body;
 
         // check if email belongs to a different user
         const existingUserWithInputEmail = await User.getUserByEmail(email);
@@ -116,9 +117,10 @@ router.put('/:id', async function(req, res, next){
 
         // debugger;
         console.log("GOOD HERE ----------------------------");
-
-        const userToBeUpdated = await User.updateUser(req.params.id, first_name, last_name, username, password, email, phone_number, is_admin, start_date);
-        // const userToBeUpdated = await User.updateUser(req.params.id, req.body);
+        // ERORR IS RAISED HERE
+        // debugger;
+        // const userToBeUpdated = await User.updateUser(req.params.id, first_name, last_name, username, password, email, phone_number, is_admin, start_date);
+        const userToBeUpdated = await User.updateUser(req.params.id, req.body);
 
         console.log("GOOD HERE AGAIN ----------------------------");
         // debugger;
