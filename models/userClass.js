@@ -113,17 +113,17 @@ class User{
         return result.rows[0];
     }
 
-    // delete a player by its id
-    // static async deletePlayer(id){
-    //     // inquiry the database to get the player by the id
-    //     const player = await db.query(`SELECT * FROM players WHERE id=${id}`)
-    //     if(player.rows.length === 0){
-    //         // throw new ExpressError(`player with id of ${id} is not found`, 404 );
-    //         return new ExpressError(`player with id of ${id} is not found`, 404 );
-    //     }
-    //     db.query('DELETE FROM players WHERE id = $1', [id]);
-    //     return ({message: `Successfully deleted a player with id of ${id}.`});
-    // } 
+    // delete a user by its id
+    static async deleteUser(id){
+        // inquiry the database to get the player by the id
+        const user = await db.query(`SELECT * FROM users WHERE id=${id}`)
+        if(user.rows.length === 0){
+            // throw new ExpressError(`player with id of ${id} is not found`, 404 );
+            return new ExpressError(`User with id of ${id} is not found`, 404 );
+        }
+        db.query('DELETE FROM users WHERE id = $1', [id]);
+        return ({message: `Successfully deleted a user with id of ${id}.`});
+    } 
 }
 
 module.exports = User;

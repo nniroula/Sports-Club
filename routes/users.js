@@ -130,19 +130,16 @@ router.put('/:id', async function(req, res, next){
 })
 
 
-// delete a player, later on archieve it
-// router.delete('/players/:id', async function(req, res, next){
-//     try{
-//         // destructure the request params, and get the id
-//         const id = req.params.id;
-//         const result = await Player.deletePlayer(id);
-//         res.json(result);
-//     }catch(e){
-//         return next(e);
-//     }
-// })
+// delete a user, later on archieve it
+router.delete('/:id', async function(req, res, next){
+    try{
+        // destructure the request params, and get the id
+        const id = req.params.id;
+        const result = await User.deleteUser(id); 
+        res.json(result);
+    }catch(e){
+        return next(e);
+    }
+})
 
 module.exports = router;
-
-
-
