@@ -115,10 +115,9 @@ router.put('/:id', async function(req, res, next){
             }
         }
 
-        // debugger;
         console.log("GOOD HERE ----------------------------");
-        // ERORR IS RAISED HERE
-        // debugger;
+        // ERORR IS RAISED HERE Error in postman is  "message": "syntax error at or near \"email\"",
+    
         // const userToBeUpdated = await User.updateUser(req.params.id, first_name, last_name, username, password, email, phone_number, is_admin, start_date);
         const userToBeUpdated = await User.updateUser(req.params.id, req.body);
 
