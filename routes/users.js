@@ -12,9 +12,9 @@ const User = require('../models/userClass');
 const { BadRequestError, ConflictError, NotFoundError } = require("../errors/expressErrors");
 
 // import Bcrypt Work Factor
-const { BCRYPT_WORK_FACTOR } = require('../configs/configurations');
-// require bcrypt
-const bcrypt = require('bcrypt');
+// const { BCRYPT_WORK_FACTOR } = require('../configs/configurations');
+// // require bcrypt
+// const bcrypt = require('bcrypt');
 
 
 const router = new express.Router();
