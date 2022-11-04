@@ -9,6 +9,7 @@ const { NotFoundError, ExpressError } = require("./errors/expressErrors");
 
 // import the middleware routes
 const middlewareRoute = require('./middleware/auth');
+const authRoute = require('./routes/auth');
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use('', playersRoute);
 // app.use(ExpressError)
 app.use('/users', usersRoute);
 // use middleware rotue
-app.use('/users', middlewareRoute);
+// app.use('/user', middlewareRoute);
+app.use('/user', authRoute);
 
 
 

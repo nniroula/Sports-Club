@@ -93,7 +93,7 @@ class User{
                                             first_name = $1, 
                                             last_name = $2, 
                                             username = $3, 
-                                            password = $4
+                                            password = $4,
                                             email= $5, 
                                             phone_number = $6, 
                                             is_admin = $7, 

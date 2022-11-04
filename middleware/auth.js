@@ -16,10 +16,6 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
-const { SECRET_KEy } = require('../configs/configurations');
-
-
-
 const router = new express.Router();
 
 
@@ -51,40 +47,27 @@ const router = new express.Router();
 
 // Authentication using Json Web token(JWT)
 
-router.post('/:login', async function(req, res, next){
+
+// authenticateJWT function, use this function in protected route
+const authenticateJWT = (req, res, next) => {
     try{
-        const { username, password } = req.body;
-
-        if(!username || !password){
-            return res.status(400).json(new ExpressError(`Valid username and password are required`, 400));
-        }
-        // password below is hashed_password in database
-        // const result = await db.query(`SELECT username, password FROM users WHERE username = $1`, [username]);
-        const result = await db.query(`SELECT username, password, is_admin FROM users WHERE username = $1`, [username]);
-
-        const user = result.rows[0];
-
-        console.log(user);
-        const is_Admin = user.is_admin;
-        console.log(`Is Admin is ${is_Admin}`);
-    
-   
-        if(user){
-            // compare the password, and allow login, compare creates a hashed password and compares it to the user credentials
-            if(await bcrypt.compare(password, user.password)){
-                // return res.json("logged in successfully!");
-                // const token = jwt.sign({username, is_admin}, SECRET_KEY);
-                const jwt_token = jwt.sign({username, is_Admin}, SECRET_KEY);
-                // console.log(jwt_token);
-                return res.json({message: "logged in successfully", jwt_token});
-            }
-        }
-        return res.status(400).json(new ExpressError("Invalid username or password", 400));
-    
-    }catch(e){
-        return next(e);
+        const payload = jwt.verify(req.body.jwt_token, SECRET_KEY);
+        req.user = payload;
+        return next();
+    }catch(err){
+        return next();
     }
-})
+}
 
+// function to make sure that a user is logged in
+function ensureLoggedIn(req, res, next){
+    if(!req.user){
+        return next(new ExpressError("Unauthorized", 401));
+    }else{
+        // console.log(`jwt token is ${req.body.jwt_token}`);
+        return next();
+    }
+}
 
-module.exports = router;
+// module.exports = router;
+module.exports = { authenticateJWT, ensureLoggedIn };
