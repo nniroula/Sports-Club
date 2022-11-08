@@ -4,6 +4,8 @@ const express = require('express');
 // import routes
 const playersRoute = require('./routes/players');
 const usersRoute = require('./routes/users');
+
+const gamesRoute = require('./routes/games');
 // import error class
 const { NotFoundError, ExpressError } = require("./errors/expressErrors");
 
@@ -23,6 +25,7 @@ app.use('/users', usersRoute);
 // use middleware rotue
 // app.use('/user', middlewareRoute);
 app.use('/user', authRoute);
+app.use('/games', gamesRoute);
 
 
 

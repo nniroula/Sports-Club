@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS players;
 -- create a users table
 DROP TABLE IF EXISTS users;
 
+DROP TABLE IF EXISTS games;
+
 CREATE TABLE players (
     id SERIAL PRIMARY KEY,
     first_name TEXT NOT NULL,
@@ -29,4 +31,12 @@ CREATE TABLE users(
     is_admin BOOLEAN NOT NULL DEFAULT FALSE,
     -- start_date TEXT NOT NULL
     start_date TEXT 
+);
+
+CREATE TABLE games(
+    id SERIAL PRIMARY KEY,
+    game_date TEXT NOT NULL,
+    venue VARCHAR(50) NOT NULL,
+    opposition_team VARCHAR(50) NOT NULL,
+    game_time TEXT NOT NULL
 );
