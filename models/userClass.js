@@ -21,7 +21,6 @@ class User{
         return result.rows;
     }
 
-
     static async getAllAdmins(){
         const result = await db.query(`SELECT id, first_name, last_name, username, email, phone_number,
                                         is_admin, start_date FROM users WHERE is_admin=true`);
@@ -88,6 +87,7 @@ class User{
     // you need an id of the player to be updated
     // NOTE updating with an invalid id throws wrong erorr in postman
     // first_name, last_name, username, password, email, phone_number, is_admin, start_date
+    
     static async updateUser(id, fName, lName, user_name, pass_word, email_id, phoneNumber, isAdmin, registeredDate){
         const result = await db.query(`UPDATE users SET 
                                             first_name = $1, 
@@ -108,15 +108,44 @@ class User{
                                             start_date`,  
                                         [fName, lName, user_name, pass_word, email_id, phoneNumber, isAdmin, registeredDate, id]
                                     );
-        // debugger;
-        // throw an error if result.rows.lenght === 0
         if(result.rows.length === 0){
             throw new ExpressError(`player with id of ${id} not found`, 404)
             // return new ExpressError(`player with id of ${id} not found`, 404)
         }
-        // debugger;
         return result.rows[0];
     }
+    
+
+    /*
+    // update without updating password, after update request ask to enter password.
+    static async updateUser(id, fName, lName, user_name, email_id, phoneNumber, isAdmin, registeredDate){
+        const result = await db.query(`UPDATE users SET 
+                                            first_name = $1, 
+                                            last_name = $2, 
+                                            username = $3, 
+                                    
+                                            email= $4, 
+                                            phone_number = $5, 
+                                            is_admin = $6, 
+                                            start_date = $7 WHERE id = $8 
+                                        RETURNING id, 
+                                            first_name, 
+                                            last_name,
+                                            username, 
+                                            email, 
+                                            phone_number, 
+                                            is_admin,  
+                                            start_date`,  
+                                        [fName, lName, user_name, email_id, phoneNumber, isAdmin, registeredDate, id]
+                                    );
+        if(result.rows.length === 0){
+            throw new ExpressError(`player with id of ${id} not found`, 404)
+            // return new ExpressError(`player with id of ${id} not found`, 404)
+        }
+        return result.rows[0];
+    }
+
+    */
 
     // delete a user by its id
     static async deleteUser(id){
@@ -129,6 +158,12 @@ class User{
         db.query('DELETE FROM users WHERE id = $1', [id]);
         return ({message: `Successfully deleted a user with id of ${id}.`});
     } 
+
+    // get the password from the database with the given username
+    // update the password with patch function, use user id
+    // static async updatePassword(username){
+    //     const user = await db.query(`SELECT * FROM users WHERE username=$1`, [username])
+    // }
 }
 
 module.exports = User;

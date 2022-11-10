@@ -16,43 +16,20 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
-const router = new express.Router();
-
-
-// authenticaion is done by comparing the hashed password. Next approach, use JWT to authenticate
-// router.post('/:login', async function(req, res, next){
-//     try{
-//         const { username, password } = req.body;
-
-//         if(!username || !password){
-//             return res.status(400).json(new ExpressError(`Valid username and password are required`, 400));
-//         }
-//         // password below is hashed_password in database
-//         const result = await db.query(`SELECT username, password FROM users WHERE username = $1`, [username]);
-//         const user = result.rows[0];
-
-//         if(user){
-//             // compare the password, and allow login, compare creates a hashed password and compares it to the user credentials
-//             if(await bcrypt.compare(password, user.password)){
-//                 return res.json("logged in successfully!");
-//             }
-//         }
-//         return res.status(400).json(new ExpressError("Invalid username or password", 400));
-    
-//     }catch(e){
-//         return next(e);
-//     }
-// })
+// const router = new express.Router();
 
 
 // Authentication using Json Web token(JWT)
 
+
+// const jwt_token = jwt.sign({username, is_Admin}, SECRET_KEY); in middleware auth.js
 
 // authenticateJWT function, use this function in protected route
 const authenticateJWT = (req, res, next) => {
     try{
         const payload = jwt.verify(req.body.jwt_token, SECRET_KEY);
         req.user = payload;
+        // console.log(`in authenticate route ${req.user.username}, ${req.user.is_Admin}`); // works
         return next();
     }catch(err){
         return next();
@@ -61,13 +38,26 @@ const authenticateJWT = (req, res, next) => {
 
 // function to make sure that a user is logged in
 function ensureLoggedIn(req, res, next){
+    // console.log(`in ensuredLogg in func ${req.user.username}, ${req.user.is_Admin}`); // works
     if(!req.user){
-        return next(new ExpressError("Unauthorized", 401));
+        return next(new ExpressError("Unauthorized! You must be logged in!", 401));
     }else{
         // console.log(`jwt token is ${req.body.jwt_token}`);
         return next();
     }
 }
 
-// module.exports = router;
-module.exports = { authenticateJWT, ensureLoggedIn };
+// const jwt_token = jwt.sign({username, is_Admin}, SECRET_KEY); in middleware auth.js
+function ensureAdmin(req, res, next){
+    // console.log(req.user.is_Admin !== true);
+    if(req.user.is_Admin !== true){ 
+        // console.log(`YOU MUST ADMIN:::::: ${req.user.is_Admin}`);
+        return next(new ExpressError("Unauthorized! You must be an admin", 401));
+        // return next();
+    }
+    // console.log("After the if condition in ensure admin func ---------------- ");
+    return next();
+}
+
+
+module.exports = { authenticateJWT, ensureLoggedIn, ensureAdmin };

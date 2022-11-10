@@ -6,6 +6,7 @@ const gameSchema = require('../schemas/gameSchema');
 const db = require('../db');  
 const Game = require('../models/gameClass');
 const { BadRequestError, ConflictError, NotFoundError } = require("../errors/expressErrors");
+const {authenticateJWT, ensureAdmin, ensureLoggedIn} = require('../middleware/auth')
 
 const router = new express.Router();
 
@@ -31,8 +32,10 @@ router.get('/:id', async function(req, res, next){
     }
 })
 
-
-router.post('/', async function(req, res, next){
+// if logged in and admin, create game
+// router.post('/players', authenticateJWT, ensureLoggedIn, ensureAdmin, async function(req, res, next){
+// router.post('/', async function(req, res, next){
+router.post('/', authenticateJWT, ensureLoggedIn, ensureAdmin, async function(req, res, next){
     try{
         const validatedInput = jsonschema.validate(req.body, gameSchema);
         if(!validatedInput.valid){
@@ -53,7 +56,7 @@ router.post('/', async function(req, res, next){
     }
 })
 
-
+// if logged in and admin, update game
 router.put('/:id', async function(req, res, next){
     try{
         const inputValidation = jsonschema.validate(req.body, gameSchema);
@@ -81,6 +84,7 @@ router.put('/:id', async function(req, res, next){
 })
 
 
+// if logged in and admin, delete game
 router.delete('/:id', async function(req, res, next){
     try{
         const id = req.params.id;

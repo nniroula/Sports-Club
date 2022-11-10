@@ -9,12 +9,12 @@ const jsonschema = require('jsonschema');
 const userSchema = require('../schemas/userSchema');
 const db = require('../db');  
 const User = require('../models/userClass');
-const { BadRequestError, ConflictError, NotFoundError } = require("../errors/expressErrors");
+const { BadRequestError, ConflictError, NotFoundError, ExpressError } = require("../errors/expressErrors");
 
 // import Bcrypt Work Factor
-// const { BCRYPT_WORK_FACTOR } = require('../configs/configurations');
-// // require bcrypt
-// const bcrypt = require('bcrypt');
+const { BCRYPT_WORK_FACTOR } = require('../configs/configurations');
+// require bcrypt
+const bcrypt = require('bcrypt');
 
 
 const router = new express.Router();
@@ -112,8 +112,7 @@ router.put('/:id', async function(req, res, next){
 
         if(existingUserWithInputEmail !== "Not Found"){
             const idOfExistingUserWithEmail = existingUserWithInputEmail['id']
-            // if(idOfExistingUserWithEmail !== Number(req.params.id)){
-            if(idOfExistingUserWithEmail !== req.params.id){
+            if(idOfExistingUserWithEmail !== Number(req.params.id)){
                 return res.status(409).json(new ConflictError("Email is taken! Try different one", 409));
             }
         }
@@ -124,6 +123,12 @@ router.put('/:id', async function(req, res, next){
             if(idOfExistingUserWithUsername !== Number(req.params.id)){
                 return res.status(409).json(new ConflictError("Username is taken! Try different one", 409));
             }
+        }
+
+        // hash the password and check with database, if it is different, avoid updating information
+        const hashed_password = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+        if(hashed_password !== existingUserWithInputUsername.password){
+            return res.status(403).json(new ExpressError("Invalid password!", 403));
         }
     
         const userToBeUpdated = await User.updateUser(req.params.id, first_name, last_name, username, password, email, phone_number, is_admin, start_date);
