@@ -1,56 +1,37 @@
 const db = require('../db');
-const errors = require('../errors/expressErrors');
-const { ExpressError, NotFoundError, ConflictError } = require('../errors/expressErrors');
+const { ExpressError } = require('../errors/expressErrors');
 
-/* NOTE:
-    We do not have constructor and we are not going to instantiate the class. So static as a modifier to the method
-    in a class, so that you can call that method on a class without instantiating that class.
+
+/*
+    No constructor. So, class cannot be instantiated. So static as a modifier to the method make the method a class
+    method, and thus, allows to call that method on a class without instantiating the class.
+    Player class is a model class used to create, update, delete, and retrieve player(s)
 */
 
 class Player{
-    // make the methods only class methods(which means use static key word)
     static async getAllPlayers(){
-        // extract the sql statemnt in the players route and use it here
-        /* Return not *, but only what is needed, select id, firstName, lastName, email, dateOfBirth*/
         const result = await db.query(`SELECT * FROM players`);
         return result.rows;
     }
 
-    // make a class method that returns one player
     static async getPlayerById(id){
         const result = await db.query(`SELECT * FROM players WHERE id=$1`, [id]);
-        
         if(result.rows.length === 0){
             return "not found";
         }
         return result.rows[0];
     }
 
-    // get a player by email
     static async getPlayerByEmail(email){
         const existingPlayerWithEmail = await db.query(`SELECT * FROM players WHERE email = $1`, [email]);
         if(existingPlayerWithEmail.rows.length > 0){
-            // return true;
-            // return "Found";
             return existingPlayerWithEmail.rows[0];
         }
         return "Not Found";
     }
 
-    // POST Request
     static async createPlayer(fName, lName, email, birthDate, phoneNumber, emergencyContact, profilePictureUrl,
         playingRole, registeredDate){
-            // check if an email already exist, if so do not create a player
-        // const existingPlayerWithEmail = await db.query(`SELECT * FROM players WHERE email = $1`, [email]);
-
-        // if(existingPlayerWithEmail.rows.length > 0){
-        //     // return "Email is taken. Please use a different email to regiter a player."
-        //     // return new ConflictError("Email is taken. Please use a different email.", 409)
-        //     // throw new ConflictError("Email is taken. Please use a different email.", 409);
-           
-        //     return res.status(409).json(new ConflictError("Email is taken. Please use a different email.", 409));
-        // }
-
         const result = await db.query(`INSERT INTO players(first_name, 
                                             last_name, 
                                             email, 
@@ -72,17 +53,14 @@ class Player{
                                     profile_picture_url,
                                     playing_role, 
                                     registered_date`, 
-                                [fName, lName, email, birthDate, phoneNumber, emergencyContact, 
-                                    profilePictureUrl, playingRole, registeredDate
+                                [fName, lName, email, birthDate, phoneNumber, emergencyContact, profilePictureUrl, 
+                                    playingRole, registeredDate
                                 ])
         return result.rows[0];
     }
 
-    // define an update method
-    // you need an id of the player to be updated
-    // NOTE updating with an invalid id throws wrong erorr in postman
-    static async updatePlayer(id, fName, lName, email, birthDate, phoneNumber, emergencyContact, 
-                        profilePictureUrl, playingRole, registeredDate){
+    static async updatePlayer(id, fName, lName, email, birthDate, phoneNumber, emergencyContact, profilePictureUrl, 
+        playingRole, registeredDate){
         const result = await db.query(`UPDATE players SET 
                                             first_name = $1, 
                                             last_name = $2, 
@@ -103,26 +81,19 @@ class Player{
                                             profile_picture_url,
                                             playing_role, 
                                             registered_date`,  
-                                        [fName, lName, email, birthDate, 
-                                                phoneNumber, emergencyContact, profilePictureUrl, playingRole, 
-                                                registeredDate, id]
+                                        [fName, lName, email, birthDate, phoneNumber, emergencyContact, 
+                                            profilePictureUrl, playingRole, registeredDate, id
+                                        ]
                                     );
-        // debugger;
-        // throw an error if result.rows.lenght === 0
         if(result.rows.length === 0){
             throw new ExpressError(`player with id of ${id} not found`, 404)
-            // return new ExpressError(`player with id of ${id} not found`, 404)
         }
-        // debugger;
         return result.rows[0];
     }
 
-    // delete a player by its id
     static async deletePlayer(id){
-        // inquiry the database to get the player by the id
         const player = await db.query(`SELECT * FROM players WHERE id=${id}`)
         if(player.rows.length === 0){
-            // throw new ExpressError(`player with id of ${id} is not found`, 404 );
             return new ExpressError(`player with id of ${id} is not found`, 404 );
         }
         db.query('DELETE FROM players WHERE id = $1', [id]);

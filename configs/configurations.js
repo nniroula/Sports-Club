@@ -2,7 +2,7 @@
 
 const express = require('express');
 
-/** Shared configurations for application, and can be required at many places. */
+/** Shared configurations for application, and is required at many places. */
 
 // require("dotenv").config();
 // require("colors");
@@ -26,13 +26,8 @@ const PORT = 3000;
 // WJB: Evaluate in 2021 if this should be increased to 13 for non-test use
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
-// console.log("Sports app Config:".green);
-// console.log("SECRET_KEY:".yellow, SECRET_KEY);
-// console.log("PORT:".yellow, PORT.toString());
+
 console.log("PORT:", PORT.toString());
-// console.log("BCRYPT_WORK_FACTOR".yellow, BCRYPT_WORK_FACTOR);
-// console.log("Database:".yellow, getDatabaseUri());
-// console.log("---");
 
 module.exports = {
     PORT,
@@ -40,5 +35,3 @@ module.exports = {
     SECRET_KEY,
     // getDatabaseUri,
 };
-
-// module.exports = PORT;
