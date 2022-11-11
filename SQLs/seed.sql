@@ -29,13 +29,14 @@ INSERT INTO players(first_name,
     );
 
 -- users table
--- INSERT INTO users(first_name, last_name, email, phone_number, is_admin)
 INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin, start_date)
 VALUES('John', 'Doe', 'jd', 'aeccPass', 'jd@gmail.com', '720-123-4567', TRUE, '10/18/2022');
 
--- INSERT INTO users(first_name, last_name, email, phone_number, is_admin)
+
+-- INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin, start_date)
+-- VALUES('AECC', 'ROOT', 'root', 'aeccPass', 'nn@gmail.com', '720-000-0000', 'true', '05/24/1987');
 INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin, start_date)
-VALUES('AECC', 'ROOT', 'root', 'aeccPass', 'nn@gmail.com', '720-000-0000', 'true', '05/24/1987');
+VALUES('AECC', 'ROOT', 'root', '$2b$12$hzSVAe6FyFlZ7o/TkQd3h.0BcwwJc9iWBoRm53AmIIi4znd70b2DC', 'nn@gmail.com', '720-000-0000', 'true', '05/24/1987');
 
 INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin)
-VALUES('Sarah', 'English', 'se', 'aeccPass', 'se@gmail.com', '720-010-0000', 'false');
+VALUES('Joe', 'Biden', 'je', 'aeccPass', 'se@gmail.com', '720-010-0000', 'false');

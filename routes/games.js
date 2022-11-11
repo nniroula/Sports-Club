@@ -7,18 +7,16 @@ const db = require('../db');
 const Game = require('../models/gameClass');
 const { BadRequestError, ConflictError, NotFoundError } = require("../errors/expressErrors");
 const {authenticateJWT, ensureAdmin, ensureLoggedIn} = require('../middleware/auth')
-
 const router = new express.Router();
 
-router.get('', async function(req, res, next){  // this is /games
+router.get('', async function(req, res, next){ 
     try{
-        const results = await Game.getAllGames(); // getAllGames() returns a promise, so await it here
+        const results = await Game.getAllGames();
         return res.json(results);
     }catch(e){
         return next(e);
     }
 })
-
 
 router.get('/:id', async function(req, res, next){
     try{
@@ -32,9 +30,6 @@ router.get('/:id', async function(req, res, next){
     }
 })
 
-// if logged in and admin, create game
-// router.post('/players', authenticateJWT, ensureLoggedIn, ensureAdmin, async function(req, res, next){
-// router.post('/', async function(req, res, next){
 router.post('/', authenticateJWT, ensureLoggedIn, ensureAdmin, async function(req, res, next){
     try{
         const validatedInput = jsonschema.validate(req.body, gameSchema);
@@ -56,8 +51,7 @@ router.post('/', authenticateJWT, ensureLoggedIn, ensureAdmin, async function(re
     }
 })
 
-// if logged in and admin, update game
-router.put('/:id', async function(req, res, next){
+router.put('/:id', authenticateJWT, ensureLoggedIn, ensureAdmin, async function(req, res, next){
     try{
         const inputValidation = jsonschema.validate(req.body, gameSchema);
         if(!inputValidation.valid){
@@ -74,7 +68,6 @@ router.put('/:id', async function(req, res, next){
         }else if(gameByDate.id !== Number(req.params.id) && gameByTime.id !== Number(req.params.id)){
             return res.status(409).json(new ConflictError("Match is taken! Try different date and time.", 409));
         }else{
-                // both above find game, but games are different
             const matchToBeUpdated = await Game.updateMatch(req.params.id, game_date, venue, opposition_team, game_time);
             return res.json(matchToBeUpdated);
         }
@@ -83,9 +76,7 @@ router.put('/:id', async function(req, res, next){
     }
 })
 
-
-// if logged in and admin, delete game
-router.delete('/:id', async function(req, res, next){
+router.delete('/:id', authenticateJWT, ensureLoggedIn, ensureAdmin, async function(req, res, next){
     try{
         const id = req.params.id;
         const result = await Game.deleteGame(id);

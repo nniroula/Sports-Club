@@ -1,9 +1,7 @@
 /* creates database tables */
 
 DROP TABLE IF EXISTS players;
--- create a users table
 DROP TABLE IF EXISTS users;
-
 DROP TABLE IF EXISTS games;
 
 CREATE TABLE players (
@@ -29,7 +27,6 @@ CREATE TABLE users(
     email TEXT NOT NULL CHECK (position('@' IN email) > 1),
     phone_number TEXT NOT NULL,
     is_admin BOOLEAN NOT NULL DEFAULT FALSE,
-    -- start_date TEXT NOT NULL
     start_date TEXT 
 );
 
