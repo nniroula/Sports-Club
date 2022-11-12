@@ -13,6 +13,7 @@ const SECRET_KEY = "secrettocricketaecc";
 
 // const PORT = +process.env.PORT || 3000;
 const PORT = 3000;
+// const PORT = 5000;
 
 // Use dev database, testing database, or via env var, production database
 // function getDatabaseUri() {
