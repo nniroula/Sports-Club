@@ -56,8 +56,17 @@ router.post('/payment', cors(), async (req, res) => {
 router.post('/payment', cors(), async (req, res) => {
     console.log('ARRIVED IN server !!!!!!');
 
-      const { token, amount } = req.body;
-        console.log(`Token is ======== ${token}`);
+    //   const { token, amount } = req.body;
+    const { token, amount } = req.body;
+        console.log(`Token ID is ======== ${token.id}`);
+        console.log(`amount is ${amount}`);
+        console.log(`req body is ${req.body}`);
+        console.log(`Email in req body is ${token.email}`); // works
+        console.log(` Token Name is ${token.billingAddress.name}`);
+        console.log(`Body name is ${req.body.name}`);
+        console.log(`Token address is ${token.billingAddress}`);
+        console.log(req.body.billingAddress)
+        console.log(`token billing add ${token.billingAddress['state']}`);
 
     try {
         await stripe.charges.create({source: token.id, amount, currency: 'USD'});
