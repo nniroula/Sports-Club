@@ -1,13 +1,6 @@
 const db = require('../db');
 const { ExpressError } = require('../errors/expressErrors');
 
-
-/*
-    No constructor. So, class cannot be instantiated. So static as a modifier to the method make the method a class
-    method, and thus, allows to call that method on a class without instantiating the class.
-    Player class is a model class used to create, update, delete, and retrieve player(s)
-*/
-
 class Player{
     static async getAllPlayers(){
         const result = await db.query(`SELECT * FROM players`);

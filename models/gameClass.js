@@ -6,7 +6,6 @@ const { ExpressError } = require('../errors/expressErrors');
     method, and thus, allows to call that method on a class without instantiating the class.
     Game class is a model class to create, update, delete, and retrieve a game
 */
-
 class Game{
     static async getAllGames(){
         const result = await db.query(`SELECT * FROM games`);
@@ -15,7 +14,6 @@ class Game{
 
     static async getGameById(id){
         const result = await db.query(`SELECT * FROM games WHERE id=$1`, [id]);
-        
         if(result.rows.length === 0){
             return "not found";
         }
@@ -55,7 +53,6 @@ class Game{
     }
 
     static async updateMatch(id, matchDate, place, oppositeTeam, gameTime){
-        console.log("Inside update match function");
         const result = await db.query(`UPDATE games SET 
                                             game_date = $1, 
                                             venue = $2, 
