@@ -1,6 +1,5 @@
 "use strict";
 
-
 const express = require('express');
 const db = require('../db');  
 const { ExpressError } = require("../errors/expressErrors");
@@ -23,13 +22,12 @@ router.post('/login', async function(req, res, next){
         const is_Admin = user.is_admin;
     
         if(user){
-            if(await bcrypt.compare(password, user.password)){
+            if(await bcrypt.compareSync(password, user.password)){
                 const jwt_token = jwt.sign({username: username, is_Admin: is_Admin}, SECRET_KEY);
-                return res.json({jwt_token});
+                return res.json({username: username, is_admin: is_Admin, jwt_token: jwt_token});
             }
         }
         return res.status(400).json(new ExpressError("Invalid username or password", 400));
-    
     }catch(e){
         return next(e);
     }
