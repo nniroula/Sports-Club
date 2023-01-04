@@ -4,7 +4,7 @@ const express = require('express');
 const jsonschema = require('jsonschema');
 const playerSchema = require('../schemas/playerSchema');
 const Player = require('../models/playerClass');
-const { BadRequestError, ConflictError, NotFoundError } = require("../errors/expressErrors");
+const { BadRequestError, ConflictError, NotFoundError, ExpressError } = require("../errors/expressErrors");
 const {authenticateJWT, ensureAdmin, ensureLoggedIn} = require('../middleware/auth')
 
 const router = new express.Router();
@@ -46,10 +46,10 @@ router.post('/players', authenticateJWT, ensureLoggedIn, ensureAdmin, async func
             return res.status(409).json(new ConflictError("Email is taken. Please use a different email.", 409));
         }
         const player = await Player.createPlayer(first_name, last_name, email, birth_date, phone_number, 
-                                    emergency_contact, profile_picture_url, playing_role, registered_date);
+                        emergency_contact, profile_picture_url, playing_role, registered_date);
         return res.status(201).json(player);
     }catch(e){
-        return next(new ExpressError("You must be admin", 401));
+        return next(e);
     }
 })
 
