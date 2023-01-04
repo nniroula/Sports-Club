@@ -1,14 +1,7 @@
-
-
 const db = require('../db');
 const { ExpressError } = require('../errors/expressErrors');
 const bcrypt = require('bcrypt');
 const { BCRYPT_WORK_FACTOR } = require('../configs/configurations');
-
-/*
-    No constructor. So, class cannot be instantiated. All methods are class methods.
-    User class is a model class used to create, update, delete, and retrieve users and admins.
-*/
 
 class User{
     static async getAllUsers(){
@@ -65,7 +58,6 @@ class User{
 
     static async createUser(fName, lName, user_name, pass_word, email_id, phoneNumber, isAdmin, registeredDate){
         const hashed_password = await bcrypt.hash(pass_word, BCRYPT_WORK_FACTOR);
-
         const result = await db.query(`INSERT INTO users(first_name, 
                                             last_name, 
                                             username,

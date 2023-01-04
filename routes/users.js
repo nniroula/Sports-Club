@@ -40,6 +40,27 @@ router.get('/:id', async function(req, res, next){
     }
 })
 
+router.get('/admins/:username', async function(req, res, next){
+    try{
+        const result = await User.getAdminByUsername(req.params.username);
+        if(result === "Not Found"){
+            return res.status(404).json(new NotFoundError(`User with username of ${req.params.username} not found`, 404));
+        }
+        return res.json(result);
+    }catch(e){
+        return next(e);
+    }
+})
+
+router.get('/passwords/codes', async function(req, res, next){
+    try{
+        const results = await User.getAllPasswords();
+        return res.json(results);
+    }catch(e){
+        return next(e);
+    }
+})
+
 router.post('/', async function(req, res, next){
     try{
         const validatedInput = jsonschema.validate(req.body, userSchema);
@@ -162,6 +183,7 @@ router.put('/admin/:id', authenticateJWT, ensureLoggedIn, ensureAdmin, async fun
             return res.status(400).json(new BadRequestError(errs)); 
         }
         const loggedInUser = await User.getAdminByUsername(req.user.username);
+
         if(loggedInUser.id !== Number(req.params.id)){
             return res.status(401).json(new ConflictError("Unauthorized! You cannot update another admin.", 401));
         }
@@ -169,13 +191,14 @@ router.put('/admin/:id', authenticateJWT, ensureLoggedIn, ensureAdmin, async fun
         const existingAdminWithInputUsername = await User.getAdminByUsername(username);
         const existingAdminWithInputEmail = await User.getAdminByEmail(email);
 
+
         if(existingAdminWithInputEmail !== "Not Found"){
             const idOfExistingAdminWithEmail = existingAdminWithInputEmail['id'];
             if(idOfExistingAdminWithEmail !== Number(req.params.id)){
                 return res.status(409).json(new ConflictError("Email is taken! Try different one", 409));
             }
         }
-        if(existingAdminWithInputUsername !== "Not found"){
+        if(existingAdminWithInputUsername !== "Not Found"){
             const idOfExistingAdminWithUsername = existingAdminWithInputUsername['id'];
             if(idOfExistingAdminWithUsername !== Number(req.params.id)){
                 return res.status(409).json(new ConflictError("Username is taken! Try different one", 409));
@@ -184,11 +207,13 @@ router.put('/admin/:id', authenticateJWT, ensureLoggedIn, ensureAdmin, async fun
         if(is_admin.toLowerCase() === "false"){
             return res.status(401).json(new ConflictError("Sorry! You cannot modify admin status.", 401));
         }
-        const comparePassword = await bcrypt.compare(password, existingAdminWithInputUsername.password);
+
+        const comparePassword = await bcrypt.compare(password, loggedInUser.password);
+
         if(!comparePassword){
             return res.status(403).json(new ExpressError("Invalid password! Enter a valid password!", 403));
         }else{
-            const userToBeUpdated = await User.updateUser(req.params.id, first_name, last_name, username, existingAdminWithInputUsername.password, email, phone_number, is_admin, start_date);
+            const userToBeUpdated = await User.updateUser(req.params.id, first_name, last_name, username, loggedInUser.password, email, phone_number, is_admin, start_date);
             return res.json(userToBeUpdated);
         }
     }catch(e){
