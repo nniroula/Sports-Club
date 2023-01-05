@@ -16,9 +16,9 @@ if (process.env.NODE_ENV === "test"){
 
 let db = new Client({
     connectionString: DB_URI,
-    ssl: {
-        rejectUnauthorized: false
-      }
+    // ssl: {
+    //     rejectUnauthorized: false
+    //   }
 });
 
 // establish a connection to database
