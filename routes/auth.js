@@ -3,6 +3,7 @@
 const express = require('express');
 const db = require('../db');  
 const { ExpressError } = require("../errors/expressErrors");
+// const { SECRET_KEY } = require('../configs/configurations');
 const { SECRET_KEY } = require('../configs/configurations');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
