@@ -4,7 +4,7 @@ const express = require('express');
 const db = require('../db');  
 const { ExpressError } = require("../errors/expressErrors");
 // const { SECRET_KEY } = require('../configs/configurations');
-const { SECRET_KEY } = require('../configs/configurations');
+const { SECRET_PASS } = require('../configs/configurations');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -24,7 +24,7 @@ router.post('/login', async function(req, res, next){
     
         if(user){
             if(await bcrypt.compareSync(password, user.password)){
-                const jwt_token = jwt.sign({username: username, is_Admin: is_Admin}, SECRET_KEY);
+                const jwt_token = jwt.sign({username: username, is_Admin: is_Admin}, SECRET_PASS);
                 return res.json({username: username, is_admin: is_Admin, jwt_token: jwt_token});
             }
         }
