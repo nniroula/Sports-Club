@@ -40,3 +40,13 @@ VALUES('AECC', 'ROOT', 'root', '$2b$12$hzSVAe6FyFlZ7o/TkQd3h.0BcwwJc9iWBoRm53AmI
 
 INSERT INTO users(first_name, last_name, username, password, email, phone_number, is_admin)
 VALUES('Joe', 'Biden', 'je', 'aeccPass', 'se@gmail.com', '720-010-0000', 'false');
+
+INSERT INTO games(game_date, 
+                venue, 
+                opposition_team, 
+                game_time)
+VALUES ('03/24/2023',
+            'Jewell Park',
+            'Self Practice',
+            '15:00'
+);

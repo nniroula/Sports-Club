@@ -1,10 +1,6 @@
 const express = require('express');
 require("dotenv").config();
 
-// if(process.env.NODE_ENV !== 'production'){
-//     require('dotenv').load();
-// }
-
 const stripe = require("stripe")(process.env.stripesecretkey);
 const cors = require("cors");
 const router = new express.Router();

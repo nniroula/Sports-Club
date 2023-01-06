@@ -1,13 +1,13 @@
 "use strict";
 
 const { ExpressError } = require("../errors/expressErrors");
-const { SECRET_KEY } = require('../configs/configurations');
+const { SECRET_PASS } = require('../configs/configurations');
 const jwt = require('jsonwebtoken');
 
 
 const authenticateJWT = (req, res, next) => {
     try{
-        const payload = jwt.verify(req.body.jwt_token, SECRET_KEY);
+        const payload = jwt.verify(req.body.jwt_token, SECRET_PASS);
         req.user = payload;
         return next();
     }catch(err){
