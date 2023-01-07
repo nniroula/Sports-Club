@@ -18,13 +18,6 @@
     }
   }
   
-  /** 401 UNAUTHORIZED error. */
-  
-//   class UnauthorizedError extends ExpressError {
-//     constructor(message = "Unauthorized") {
-//       super(message, 401);
-//     }
-//   }
   
   /** 400 BAD REQUEST error. */
   
@@ -53,7 +46,6 @@
   module.exports = {
     ExpressError,
     NotFoundError,
-    // UnauthorizedError,
     BadRequestError,
     ForbiddenError,
     ConflictError
