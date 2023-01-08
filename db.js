@@ -26,7 +26,8 @@ if (process.env.NODE_ENV === "production") {
 
 let db = new Client({
     connectionString: DB_URI,
-    ssl: { rejectUnauthorized: false }
+    // comment ssl to make the sever run locally, uncommented is for heroku
+    // ssl: { rejectUnauthorized: false }
 });
 
 db.connect();
