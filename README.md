@@ -2,7 +2,7 @@
 
 ### Deployment
 Site: ```https://aecc-api.herokuapp.com``` <br>
-User Interface: ```https://aecc.herokuapp.com```. Click [Here](https://aecc.herokuapp.com) to access it.
+User Interface: ```https://cricketaecc.herokuapp.com```. Click [Here](https://cricketaecc.herokuapp.com) to access it.
 
 <br>
 
