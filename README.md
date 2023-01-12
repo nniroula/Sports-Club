@@ -43,7 +43,7 @@ This project will have an internal API, which means the API in the project will 
 <br>
 
 ### External Dependencies
-User Interface: ```https://aecc.herokuapp.com```. Click [Here](https://aecc.herokuapp.com) to access it.
+User Interface: ```https://cricketaecc.herokuapp.com```. Click [Here](https://cricketaecc.herokuapp.com) to access it.
 
 <br>
 
@@ -58,6 +58,8 @@ User Interface: ```https://aecc.herokuapp.com```. Click [Here](https://aecc.hero
 <br>
 
 #### 2. Running Test files
+- - jest --coverage to get the code coverage
+- -  jest testFile(file name with .js extension)
 
 <br>
 
